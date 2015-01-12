@@ -2,15 +2,15 @@ package com.diegoschneider.dbcelulares;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import org.h2.jdbcx.JdbcDataSource;
+import com.diegoschneider.dbcelulares.clients.ClientPanel;
 
 public class MainWindow extends JFrame {
 
@@ -22,39 +22,22 @@ public class MainWindow extends JFrame {
 	 */
 	public static void main(String[] args) {
 		
-		JdbcDataSource ds = new JdbcDataSource();
-		ds.setUrl("jdbc:h2:./dbcelulares;ifexists=true");
-		ds.setUser("sa");
-		ds.setPassword("sa");
-		Connection conn;
-		try {
-			conn = ds.getConnection();
-			System.out.println("DB existente");
-		} catch (SQLException e1) {
-			//DB Inexistente
-			if(e1.getErrorCode() == 90013) {
-				try {
-					System.out.println("Creando bd");
-					ds.setUrl("jdbc:h2:./dbcelulares");
-					conn = ds.getConnection();
-				} catch (SQLException e) {
-					e.printStackTrace();
+		DBManager.connect();
+		if(DBManager.isConnected()) {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						MainWindow frame = new MainWindow();
+						frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
-			} else {
-				e1.printStackTrace();
-			}
+			});
+		} else {
+			JOptionPane.showMessageDialog(null, "Error al conectar la base de datos");
+			System.exit(0);
 		}
-		
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainWindow frame = new MainWindow();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 
 	/**
@@ -66,20 +49,30 @@ public class MainWindow extends JFrame {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
-			//e.printStackTrace();
+			System.err.println("Usando LookNFeel original");
 		}
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setResizable(true);
 		setMinimumSize(minimumSize);
 		setSize(minimumSize);
 		setLocation(100, 100);
 		
+		addWindowListener(new java.awt.event.WindowAdapter() {
+	        public void windowClosing(WindowEvent winEvt) {
+	        	int result = JOptionPane.showConfirmDialog(null, "Estás seguro que deseas salir?", "!!!", JOptionPane.YES_NO_OPTION);
+	        	if(result == JOptionPane.YES_OPTION) {
+	        		System.exit(0);
+	        	}
+	            
+	        }
+	    });
+		
 		JTabbedPane contentPane = new JTabbedPane();
 		setContentPane(contentPane);
 		
 		contentPane.addTab("Inicio", new PlaceHolderPanel());
-		contentPane.addTab("Clientes", new PlaceHolderPanel());
+		contentPane.addTab("Clientes", new ClientPanel());
 		contentPane.addTab("Presupuestos", new PlaceHolderPanel());
 	}
 }

@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 
 public class PlaceHolderPanel extends JPanel {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -9045820577313414342L;
 	private static int instances = 0;
 	
 	public PlaceHolderPanel() {
