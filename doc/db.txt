@@ -1,0 +1,18 @@
+
+[clients]
+ID - int - AUTO_INCREMENT PK
+name - varchar(60)
+surname - varchar(60)
+phone - varchar(100)
+
+
+[budgets]
+ID - int - AUTO_INCREMENT PK
+client - int - FK clients.ID
+description - varchar(500)
+
+[budget_item]
+ID - int - AUTO_INCREMENT PK
+budget - int - FK budgets.ID
+description - varchar(100)
+price - int

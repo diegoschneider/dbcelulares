@@ -11,11 +11,7 @@ public class ClientPanel extends TablePanel {
 	}
 	
 	public void addAction() {
-		//table.getModel().
-	}
-	
-	public void editAction() {
-
+		super.addAction();
 	}
 	
 	public void deleteAction() {

@@ -24,10 +24,10 @@ public class TablePanel extends JPanel {
 		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0};
-		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 0.0};
+		gridBagLayout.columnWeights = new double[]{1.0, 0.0};
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
@@ -39,7 +39,7 @@ public class TablePanel extends JPanel {
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 0;
-		gbc_scrollPane.gridwidth = 3;
+		gbc_scrollPane.gridwidth = 2;
 		add(scrollPane, gbc_scrollPane);
 		
 		JButton btnAdd = new JButton("Agregar "+objective);
@@ -53,19 +53,6 @@ public class TablePanel extends JPanel {
 		gbc_btnAdd.gridy = 1;
 		add(btnAdd, gbc_btnAdd);
 		
-		JButton btnEdit = new JButton("Editar "+objective);
-		btnEdit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(table.getSelectedRow() != -1) {
-					editAction();
-				}
-			}
-		});
-		GridBagConstraints gbc_btnEdit = new GridBagConstraints();
-		gbc_btnEdit.gridx = 1;
-		gbc_btnEdit.gridy = 1;
-		add(btnEdit, gbc_btnEdit);
-		
 		JButton btnDelete = new JButton("Eliminar "+objective);
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -75,7 +62,7 @@ public class TablePanel extends JPanel {
 			}
 		});
 		GridBagConstraints gbc_btnDelete = new GridBagConstraints();
-		gbc_btnDelete.gridx = 2;
+		gbc_btnDelete.gridx = 1;
 		gbc_btnDelete.gridy = 1;
 		add(btnDelete, gbc_btnDelete);
 		
@@ -83,18 +70,14 @@ public class TablePanel extends JPanel {
 	
 	public void setTableModel(TableModel model) {
 		table = new JTable();
-		table.setFillsViewportHeight(true);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setModel(model);
-		
 	}
 	
 	public void addAction() {
-		System.out.println("Add");
-	}
-	
-	public void editAction() {
-		System.out.println("Edit");
+		BaseTableModel model = (BaseTableModel) table.getModel();
+		model.addRow(new Object[model.getColumnCount()]);
 	}
 	
 	public void deleteAction() {

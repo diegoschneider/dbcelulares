@@ -1,7 +1,9 @@
 package com.diegoschneider.dbcelulares;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.JOptionPane;
 
@@ -63,6 +65,18 @@ public final class DBManager {
 	 */
 	public static Connection getConnection() {
 		return conn;
+	}
+	
+	public static ResultSet selectQuery(String sql) {
+		Statement stmt;
+		ResultSet rs;
+		try {
+			stmt = getConnection().createStatement();
+			rs = stmt.executeQuery(sql);
+		} catch (SQLException e) {
+			return null;
+		}
+		return rs;
 	}
 	
 }
