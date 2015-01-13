@@ -13,6 +13,9 @@ public final class DBManager {
 	
 	private DBManager() {}
 	
+	/**
+	 * Se conecta a la base de datos
+	 */
 	public static void connect() {
 		JdbcDataSource ds = new JdbcDataSource();
 		ds.setUrl("jdbc:h2:./dbcelulares;ifexists=true");
@@ -42,6 +45,10 @@ public final class DBManager {
 		}
 	}
 	
+	/**
+	 * Checkea si está conectado a la BD
+	 * @return boolean - Si está conectado
+	 */
 	public static boolean isConnected() {
 		try {
 			return conn.isValid(0);
@@ -50,6 +57,10 @@ public final class DBManager {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return Connección actual
+	 */
 	public static Connection getConnection() {
 		return conn;
 	}

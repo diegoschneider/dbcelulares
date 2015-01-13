@@ -1,15 +1,25 @@
 package com.diegoschneider.dbcelulares.clients;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import com.diegoschneider.dbcelulares.TablePanel;
 
-public class ClientPanel extends JPanel {
+public class ClientPanel extends TablePanel {
 	
 	private static final long serialVersionUID = -1859310393285037812L;
 
 	public ClientPanel() {
-		super();
-		add(new JLabel("ClientPanel"));
+		super("cliente");
+	}
+	
+	public void addAction() {
+		//table.getModel().
+	}
+	
+	public void editAction() {
+
+	}
+	
+	public void deleteAction() {
+
 	}
 	
 }

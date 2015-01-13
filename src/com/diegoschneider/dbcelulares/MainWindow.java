@@ -51,7 +51,7 @@ public class MainWindow extends JFrame {
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
 			System.err.println("Usando LookNFeel original");
 		}
-		
+		setTitle("DB Celulares");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setResizable(true);
 		setMinimumSize(minimumSize);
@@ -60,10 +60,11 @@ public class MainWindow extends JFrame {
 		
 		addWindowListener(new java.awt.event.WindowAdapter() {
 	        public void windowClosing(WindowEvent winEvt) {
-	        	int result = JOptionPane.showConfirmDialog(null, "Estás seguro que deseas salir?", "!!!", JOptionPane.YES_NO_OPTION);
-	        	if(result == JOptionPane.YES_OPTION) {
+	        	//TODO Debug 
+	        	//int result = JOptionPane.showConfirmDialog(null, "Estás seguro que deseas salir?", "!!!", JOptionPane.YES_NO_OPTION);
+	        	//if(result == JOptionPane.YES_OPTION) {
 	        		System.exit(0);
-	        	}
+	        	//}
 	            
 	        }
 	    });
